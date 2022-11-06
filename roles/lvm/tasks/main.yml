@@ -1,0 +1,29 @@
+- name: Resize root logical volume
+  lvol:
+    vg: ubuntu-vg
+    lv: ubuntu-lv
+    size: 15G
+    resizefs: yes
+
+- name: Create logical volume
+  lvol:
+    vg: ubuntu-vg
+    lv:  lv
+    size: 1G
+
+- name: Add sda to volume group
+  lvg:
+    vg: ubuntu-vg
+    pvs: /dev/sda1,/dev/sdc3
+    pvresize: yes
+
+- name: Verify or create a mirrored LV
+  lvol:
+    lv: lv_mirror
+    vg: ubuntu-vg
+    pvs: /dev/sda1
+    state: present
+    active: yes
+    opts: "-m 1"
+    size: "100%FREE"
+    #size: 500M

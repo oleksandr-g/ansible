@@ -1,0 +1,30 @@
+- name: Get drives and size
+  debug:
+    msg: "{{ ansible_devices[item].size }}"
+  loop: "{{ ansible_devices.keys() | map('regex_search', 'sd.*') | select('string') | list }}"
+
+- name: Read drive sda information
+  parted: device=/dev/sda unit=GiB
+  register: sda_info
+
+- name : Make partition on sda
+  parted:
+    device: /dev/sda
+    number: 1
+    flags: [lvm]
+    state: present
+    part_end: "100%"
+    resize: true
+
+- name: Read drive sdb information
+  parted: device=/dev/sdb unit=GiB
+  register: sdb_info
+
+- name: Make partition on sdb
+  parted:
+    device: /dev/sdb
+    number: 1
+    flags: [lvm]
+    state: present
+    part_end: "100%"
+    resize: true
