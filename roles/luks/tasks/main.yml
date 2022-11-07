@@ -5,25 +5,26 @@
     owner: root
     group: root
     mode: 0400
-
+    
 - name: Create LUKS container (remains unchanged if it already exists)
   community.crypto.luks_device:
-    device: /dev/disk/by-uuid/504e04e6-8f87-4770-a655-0edb3e84d3a4
+    device: /dev/sda
     state: present
     keyfile: /root/keyfile
-
-- name: Create a ext3 filesystem on disk
-  filesystem:
-    fstype: ext3
-    dev: /dev/disk/by-uuid/504e04e6-8f87-4770-a655-0edb3e84d3a4
 
 - name: Add the below lines to crypttab
   blockinfile:
     path: /etc/crypttab
     state: present
     block: |
-      sda_crypt      /dev/disk/by-uuid/504e04e6-8f87-4770-a655-0edb3e84d3a4  /root/keyfile  luks
+      sda_crypt      /dev/sda  /root/keyfile  luks
 
+- name: Create a ext3 filesystem on disk
+  filesystem:
+    fstype: ext3
+    dev: /dev/mapper/sda_crypt
+    force: yes
+    
 - name: Create a directory for mounting if it does not exist
   ansible.builtin.file:
     path: /crypted
