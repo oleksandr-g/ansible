@@ -12,6 +12,11 @@
     state: present
     keyfile: /root/keyfile
 
+- name: Create a ext3 filesystem on disk
+  filesystem:
+    fstype: ext3
+    dev: /dev/disk/by-uuid/504e04e6-8f87-4770-a655-0edb3e84d3a4
+
 - name: Add the below lines to crypttab
   blockinfile:
     path: /etc/crypttab
