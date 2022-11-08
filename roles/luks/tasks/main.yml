@@ -9,7 +9,8 @@
 - name: Create LUKS container (remains unchanged if it already exists)
   community.crypto.luks_device:
     device: /dev/sda
-    state: present
+    state: opened
+    name: sda_crypt
     keyfile: /root/keyfile
 
 - name: Add the below lines to crypttab
