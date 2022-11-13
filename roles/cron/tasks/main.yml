@@ -1,0 +1,7 @@
+- name: Put cron on machine
+  template:
+    src: /home/aleksandr/ansible/templates/cron.j2
+    dest: /etc/crontab
+    owner: root
+    group: root
+    mode: 0644
