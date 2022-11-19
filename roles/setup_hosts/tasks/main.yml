@@ -3,8 +3,16 @@
     name: ntp
     state: present
 
-- name: Ensure ntp up and loaded
+- name: Add the below lines to ntp config file
+  blockinfile:
+    path: /etc/ntp.conf
+    state: present
+    insertafter: "# Specify one or more NTP servers."
+    block: |
+      server 192.168.1.22 prefer
+
+- name: Ensure ntp up and enabled
   service: 
     name: ntp
-    state: started
+    state: restarted
     enabled: yes
