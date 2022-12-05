@@ -4,3 +4,4 @@
   roles:
     - docker_install
     - setup_nfs
+    - nginx_install
