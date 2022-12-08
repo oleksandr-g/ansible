@@ -1,0 +1,8 @@
+- name: Start webserver container
+  docker_container:
+    name: webserver
+    image: nginx
+    published_ports:
+     - "8080:80"
+    volumes:
+      - "/var/locally-mounted:/usr/share/nginx/html:ro"

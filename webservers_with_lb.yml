@@ -3,5 +3,6 @@
   become: yes
   roles:
     - docker_install
-    - setup_nfs
+    #- setup_nfs
     - nginx_install
+    - start_webserver_inDocker
