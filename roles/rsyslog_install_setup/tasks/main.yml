@@ -1,0 +1,19 @@
+- name: Install rsyslog
+  apt:
+    name:
+      - rsyslog
+    state: present
+    update_cache: true
+
+- name: Add remote server to rsyslog config
+  blockinfile:
+    path: /etc/rsyslog.conf
+    state: present
+    block: |
+      *.*  @@192.168.1.22:514
+
+- name: Restart rsyslog
+  service: 
+    name: rsyslog
+    state: restarted
+    enabled: yes
