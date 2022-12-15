@@ -2,8 +2,8 @@
 - hosts: hosts
   become: yes
   roles:
-    #- docker_install
-    #- setup_nfs
-    #- nginx_install
-    #- start_webserver_inDocker
+    - docker_install
+    # - setup_nfs
+    - nginx_install
+    - start_webserver_inDocker
     - rsyslog_install_setup

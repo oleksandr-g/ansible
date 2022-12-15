@@ -2,6 +2,7 @@
   docker_container:
     name: webserver
     image: nginx
+    state: started
     published_ports:
      - "8080:80"
     volumes:
