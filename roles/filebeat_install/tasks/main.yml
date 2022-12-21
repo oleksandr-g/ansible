@@ -1,0 +1,32 @@
+- name: Install apt-transport-https
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - lsb-release
+      - gnupg
+    state: latest
+    update_cache: true
+
+- name: Add signing key
+  ansible.builtin.apt_key:
+    url: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Add repository into sources list
+  ansible.builtin.apt_repository:
+    repo: "deb https://artifacts.elastic.co/packages/8.x/apt stable main"
+    state: present
+    filename: elastic-8.x
+
+- name: Install filebeat
+  ansible.builtin.apt:
+    name:
+      - filebeat
+    update_cache: true
+
+- name: Ensure filebeat up and enabled
+  service: 
+    name: filebeat
+    state: restarted
+    enabled: yes
